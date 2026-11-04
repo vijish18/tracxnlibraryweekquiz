@@ -65,7 +65,7 @@ if (nextTip && previousTip) {
       rotationTimer = window.setTimeout(() => {
         showResearchTip(1);
         scheduleRotation();
-      }, 6000);
+      }, 2000);
     }
   }
   nextTip.addEventListener("click", () => {
