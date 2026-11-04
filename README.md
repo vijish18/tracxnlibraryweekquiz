@@ -4,7 +4,7 @@ A responsive HTML/CSS/JavaScript website for PES Library Week, 14–21 November 
 
 ## Current state
 
-The website design is complete as a first preview. **No Google Form has been created or connected, and this website is not published.** Empty form configuration shows a clear setup message and collects no answers. The research preview contains draft prompts from the supplied PDF; headlines and deep links have not been validated. Name-based PES and Tracxn branding is used, not official logo artwork.
+The website is published on GitHub Pages and connects to the published Google Form. The form contains 5 required participant fields and 10 required paragraph questions. Responses are linked to a private Google Sheet. Public response summaries are disabled. There is no Google sign-in requirement or automatic duplicate prevention. Answers are reviewed manually. Name-based branding is used, not official logo artwork. Tracxn deep links and a faculty answer key still need organiser validation.
 
 ## Local preview
 
@@ -26,7 +26,7 @@ Run `python3 -m http.server 8000` from this directory and visit http://localhost
 2. Upload these project files to the repository root, preserving `.github/workflows/pages.yml`.
 3. Use `main` as the default branch. In Settings → Pages, choose **GitHub Actions** as the build source.
 4. Open Actions and run **Deploy quiz website to GitHub Pages**, or push a commit to `main`.
-5. The deployment workflow publishes only index.html, styles.css, app.js and config.js. Its deployment result gives the participant URL; it will typically be `https://vijish18.github.io/pes-tracxn-library-quiz/` if that owner and name are used. This is a proposed URL, not an existing deployment.
+5. The deployment workflow publishes only index.html, styles.css, app.js and config.js. Its deployment result gives the participant URL; it will typically be `https://vijish18.github.io/pes-tracxn-library-quiz/` if that owner and name are used. This is the live deployment URL.
 6. Test the published page on mobile and desktop, follow every link, and verify a complete Google Form submission reaches Sheets.
 
 Updating the repository redeploys the website. Editing form questions happens in Google Forms. Updating a form's existing questions normally does not require changing the embed URL; replacing the entire form requires updating config.js.

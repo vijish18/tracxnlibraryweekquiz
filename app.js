@@ -1,16 +1,56 @@
 "use strict";
 
 const questions = [
-  ["Microsoft", "How many companies has Microsoft acquired in the last 2 years? How many of them are AI companies?", "Microsoft profile → Acquisitions → last 24 months"],
-  ["Miro", "What was Miro’s last funding round, and who were its top 3 investors?", "Miro profile → Funding rounds / Investors"],
-  ["Bending Spoons", "How many acquisitions has Bending Spoons made? Name any 3 of them.", "Bending Spoons profile → Acquisitions"],
-  ["Classiq", "How much had Classiq raised in total? Name 2 of its competitors.", "Classiq profile → Funding / Competitors"],
-  ["Blume Ventures", "Name 3 other healthtech startups in Blume Ventures’ portfolio.", "Blume Ventures investor profile → Portfolio → Healthtech"],
-  ["NVIDIA", "How many Indian startups has NVIDIA invested in? Name 2.", "NVIDIA investor profile → Portfolio → India"],
-  ["Peak XV", "Which 3 sectors does Peak XV invest in the most?", "Peak XV investor profile → Portfolio by sector"],
-  ["Tractian", "When was Tractian founded? How many years did it take to become a unicorn?", "Tractian profile → Overview / Funding rounds"],
-  ["Indian gaming", "Name 3 other Indian gaming startups and their latest funding round.", "Gaming sector → India → latest funding"],
-  ["Instinct", "Who led the round? Compare Instinct’s total funding with 2 of its competitors.", "Instinct profile → Funding rounds / Competitors"]
+  [
+    "Microsoft",
+    "How many companies has Microsoft acquired in the last 24 months as of your research date? How many are AI companies?",
+    "Microsoft profile → Acquisitions"
+  ],
+  [
+    "Miro",
+    "Give the latest funding round type, date, amount and currency. Name any 3 investors listed in its profile.",
+    "Miro → Funding rounds / Investors"
+  ],
+  [
+    "Bending Spoons",
+    "Give its total acquisitions and name any 3 acquired companies.",
+    "Bending Spoons → Acquisitions"
+  ],
+  [
+    "Classiq",
+    "Give its total funding with currency and name 2 competitors.",
+    "Classiq → Funding / Competitors"
+  ],
+  [
+    "Blume Ventures",
+    "Name 3 healthtech portfolio companies other than Cent.",
+    "Blume Ventures → Portfolio → Healthtech"
+  ],
+  [
+    "NVIDIA",
+    "How many Indian startups are in its investment portfolio? Name 2.",
+    "NVIDIA investor profile → Portfolio → India"
+  ],
+  [
+    "Peak XV",
+    "Name the top 3 sectors ranked by portfolio company count.",
+    "Peak XV → Portfolio by sector"
+  ],
+  [
+    "Tractian",
+    "Give its founding year, first unicorn funding-round year, and elapsed years by subtraction. If no unicorn round is listed, state that.",
+    "Tractian → Overview / Funding rounds"
+  ],
+  [
+    "Indian gaming",
+    "Name 3 Indian gaming startups other than Matiks and give each latest round type, date, amount and currency if available.",
+    "Gaming → India → latest funding"
+  ],
+  [
+    "Instinct",
+    "Identify the exact company profile used, name its latest round's lead investors, and compare its total funding with 2 competitors, including amounts and currencies. State if no matching company or data is available.",
+    "Instinct → Funding rounds / Competitors"
+  ]
 ];
 
 const list = document.querySelector("#question-list");
