@@ -43,6 +43,54 @@ function showResearchTip(direction) {
 const nextTip = document.querySelector("#next-tip");
 const previousTip = document.querySelector("#previous-tip");
 if (nextTip && previousTip) {
-  nextTip.addEventListener("click", () => showResearchTip(1));
-  previousTip.addEventListener("click", () => showResearchTip(-1));
+  const card = document.querySelector(".tip-card");
+  const content = document.querySelector(".tip-content");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.id = "toggle-tip-rotation";
+  let paused = reducedMotion.matches;
+  let hovered = false;
+  let focused = false;
+  let rotationTimer = null;
+  previousTip.parentElement.insertBefore(toggle, previousTip);
+
+  function scheduleRotation() {
+    window.clearTimeout(rotationTimer);
+    const running = !paused && !hovered && !focused && !document.hidden;
+    content.setAttribute("aria-live", running ? "off" : "polite");
+    toggle.textContent = paused ? "▶" : "Ⅱ";
+    toggle.setAttribute("aria-label", paused ? "Play research tips" : "Pause research tips");
+    if (running) {
+      rotationTimer = window.setTimeout(() => {
+        showResearchTip(1);
+        scheduleRotation();
+      }, 6000);
+    }
+  }
+  nextTip.addEventListener("click", () => {
+    showResearchTip(1);
+    scheduleRotation();
+  });
+  previousTip.addEventListener("click", () => {
+    showResearchTip(-1);
+    scheduleRotation();
+  });
+  toggle.addEventListener("click", () => {
+    paused = !paused;
+    scheduleRotation();
+  });
+  card.addEventListener("mouseenter", () => { hovered = true; scheduleRotation(); });
+  card.addEventListener("mouseleave", () => { hovered = false; scheduleRotation(); });
+  card.addEventListener("focusin", () => { focused = true; scheduleRotation(); });
+  card.addEventListener("focusout", (event) => {
+    focused = card.contains(event.relatedTarget);
+    scheduleRotation();
+  });
+  document.addEventListener("visibilitychange", scheduleRotation);
+  reducedMotion.addEventListener("change", (event) => {
+    if (event.matches) paused = true;
+    scheduleRotation();
+  });
+  scheduleRotation();
 }
