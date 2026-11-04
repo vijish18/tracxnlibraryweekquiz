@@ -25,3 +25,24 @@ if (form) {
 } else if (configuredValue) {
   console.error("Invalid quiz form URL. Use the full HTTPS docs.google.com Forms responder URL ending in /viewform.");
 }
+
+const researchTips = [
+  { title: "Right name. Right company.", text: "Before using a company’s data, check its website and location to make sure you have the right profile." },
+  { title: "One round or total funding?", text: "A company’s latest funding round is different from the total it has raised. Check which figure the question asks for." },
+  { title: "Give the number some context.", text: "Include the currency with funding amounts. For a list or count, check that the country and date filters match the question." }
+];
+let researchTipIndex = 0;
+function showResearchTip(direction) {
+  researchTipIndex = (researchTipIndex + direction + researchTips.length) % researchTips.length;
+  const tip = researchTips[researchTipIndex];
+  document.querySelector("#tip-title").textContent = tip.title;
+  document.querySelector("#tip-text").textContent = tip.text;
+  document.querySelector("#tip-icon").textContent = String(researchTipIndex + 1).padStart(2, "0");
+  document.querySelector("#tip-counter").textContent = String(researchTipIndex + 1).padStart(2, "0") + " / 03";
+}
+const nextTip = document.querySelector("#next-tip");
+const previousTip = document.querySelector("#previous-tip");
+if (nextTip && previousTip) {
+  nextTip.addEventListener("click", () => showResearchTip(1));
+  previousTip.addEventListener("click", () => showResearchTip(-1));
+}
