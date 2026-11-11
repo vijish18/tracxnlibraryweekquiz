@@ -43,6 +43,14 @@ Participants read the ten questions on the website, open each Tracxn starting li
 - Website event dates are descriptive. Opening and closing response collection must be managed in Google Forms; once the form stops accepting responses, submissions from the page are lost without an error.
 - No answer key belongs in this repository or on the website.
 
+## Security
+
+- The site is static files only. There is no server, database, login or secret behind it, so there is nothing on the site itself to break into.
+- `index.html` carries a Content-Security-Policy: scripts and styles load only from this site (plus the Lato font from Google Fonts), images only from this site and cdn.tracxn.com, and the page may send data only to docs.google.com. If you add a new script, font or data source, update that policy or the browser will block it.
+- Only people with write access to the repository can change the site. Keep two-factor authentication on for the owning GitHub account and do not add collaborators you do not need.
+- The Google Form's address is visible in `config.js` by necessity. Anyone can therefore send junk responses to it. Watch for obvious spam rows in the response Sheet; real entries carry a university email.
+- Never commit the answer key, participant data or credentials.
+
 ## Before the event
 
 Confirm official branding, participant details, rules, marking guide, prize wording (if any), Tracxn source links, and headline accuracy. Decide whether to keep the public question preview. Do not publish confidential content. Verify that question wording in the preview and Google Form matches after any edits.
