@@ -33,14 +33,14 @@ Updating the repository redeploys the website. Editing form questions happens in
 
 ## How answers reach Google Forms
 
-Participants read the ten questions on the website, open each Tracxn starting link, and type their answers into the page. Answers are kept in the browser's local storage so a refresh does not lose them. "Continue to submit" then loads the Google Form with those ten answers already filled in. The participant adds their name, email and department in the form and presses Google's own Submit button.
+Participants read the ten questions on the website, open each Tracxn starting link, and type their answers into the page. Answers are kept in the browser's local storage until they submit, so a refresh does not lose them. In the final step they add their name, university email and department and press "Submit my answers". The page then posts the response straight to the Google Form's `formResponse` address. Participants never see the Google Form.
 
 ## Constraints
 
-- Google Forms still receives and confirms every submission. The page never submits on a participant's behalf and never treats the form loading as a successful submission. Participants must see Google Forms' confirmation.
-- Only the ten quiz answers are carried in the form link. Participant details are typed into the form and are never placed in a link.
-- `config.js` must list the correct entry id for each question (see `GOOGLE_FORM_SETUP.md`). If an id is wrong, that answer arrives blank and the participant has to retype it in the form.
-- Website event dates are descriptive. Opening and closing response collection must be managed in Google Forms.
+- A browser cannot read Google's reply to a request made from another site. The page shows "Your answers have been sent" when the request completes and an error when the network fails. It cannot detect a response that Google itself rejects, so the form must stay open, must not require sign-in, and must not gain new required questions without the page being updated.
+- `config.js` must list the correct entry id for every field (see `GOOGLE_FORM_SETUP.md`). If an id is wrong, that answer is silently dropped. After any change to the form, submit one test response from the website and check it in the form's Responses tab.
+- Participant details travel in the body of the request to Google, never in a link.
+- Website event dates are descriptive. Opening and closing response collection must be managed in Google Forms; once the form stops accepting responses, submissions from the page are lost without an error.
 - No answer key belongs in this repository or on the website.
 
 ## Before the event
