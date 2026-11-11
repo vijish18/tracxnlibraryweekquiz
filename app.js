@@ -312,9 +312,11 @@ if (clearButton) {
 }
 
 const researchTips = [
-  { title: "Follow the filters in order.", text: "Each hint is a chain of filters. Apply them one at a time, left to right, and watch the list shrink." },
-  { title: "Check the result count.", text: "Tracxn shows how many results match your filters. For the counting questions, that number is your answer." },
-  { title: "Paste the Tracxn link.", text: "For questions 1 to 6, open the company on Tracxn and copy the link from your browser’s address bar." }
+  { title: "Sign in to Tracxn first.", text: "Open Tracxn in another tab and sign in with your institution account. Every “Start here” button will then open straight on the right list." },
+  { title: "Add the filters left to right.", text: "Each hint is a chain. Add the first filter, check that the list shrinks, then add the next. Skipping one changes the answer." },
+  { title: "Questions 1 to 6: copy the company link.", text: "Click the company’s name to open its Tracxn page, then copy the link from your browser’s address bar and paste it as your answer." },
+  { title: "Questions 7 to 10: read the result count.", text: "Once every filter is on, Tracxn shows the number of results above the table. That number is your answer." },
+  { title: "Get the dates exactly right.", text: "For funding rounds and acquisitions, set the range from 1 January to 31 October 2026. One wrong date gives a different count." }
 ];
 let researchTipIndex = 0;
 function showResearchTip(direction) {
@@ -322,9 +324,12 @@ function showResearchTip(direction) {
   const tip = researchTips[researchTipIndex];
   document.querySelector("#tip-title").textContent = tip.title;
   document.querySelector("#tip-text").textContent = tip.text;
-  document.querySelector("#tip-icon").textContent = String(researchTipIndex + 1).padStart(2, "0");
-  document.querySelector("#tip-counter").textContent = String(researchTipIndex + 1).padStart(2, "0") + " / 03";
+  document.querySelector("#tip-icon").textContent = String(researchTipIndex + 1);
+  document.querySelector("#tip-counter").textContent = (researchTipIndex + 1) + " of " + researchTips.length;
+  document.querySelectorAll("#tip-dots span").forEach((dot, index) => dot.classList.toggle("is-current", index === researchTipIndex));
 }
+const tipDots = document.querySelector("#tip-dots");
+if (tipDots) researchTips.forEach((tip, index) => { const dot = document.createElement("span"); if (index === 0) dot.className = "is-current"; tipDots.append(dot); });
 const nextTip = document.querySelector("#next-tip");
 const previousTip = document.querySelector("#previous-tip");
 if (nextTip && previousTip) {
@@ -350,7 +355,7 @@ if (nextTip && previousTip) {
       rotationTimer = window.setTimeout(() => {
         showResearchTip(1);
         scheduleRotation();
-      }, 2000);
+      }, 7000);
     }
   }
   nextTip.addEventListener("click", () => {
