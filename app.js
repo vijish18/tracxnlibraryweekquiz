@@ -1,5 +1,11 @@
 "use strict";
 
+// Refuse to run inside another site's frame, so the quiz cannot be overlaid or disguised.
+if (window.top !== window.self) {
+  document.documentElement.style.display = "none";
+  throw new Error("This page cannot be shown inside another site.");
+}
+
 // The ten questions. Answers are deliberately not stored anywhere on this site.
 const COMPANY_COLUMNS = "name%2CtracxnScore%2Clatest5YearsRevenue%2ClatestFundingRoundDate%2Cstage%2CpaFeedIdFilter%2CcareersPage%2CspecialFlags%2CcountryNameFilter%2CfoundedYear";
 const ROUND_COLUMNS = "companyDetails%2CfundingDate%2CfoundedYear%2Camount%2Cvaluation%2ClatestDomainAnnualRevenue%2Clocations%2CfundingRoundName%2CcompanyStage%2CfundingroundPreMoneyValuation%2CrevenueMultiple%2CevEbitda%2CinvestorList";
@@ -147,6 +153,7 @@ function renderQuestion(question) {
   if (question.kind === "number") input.inputMode = "numeric";
   input.placeholder = question.kind === "url" ? "https://platform.tracxn.com/a/d/company/…" : "e.g. 12";
   input.autocomplete = "off";
+  input.maxLength = question.kind === "url" ? 600 : 6;
   input.spellcheck = false;
   input.value = answers[question.n] || "";
   const error = el("p", "answer-error");

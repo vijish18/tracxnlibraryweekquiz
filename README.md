@@ -49,6 +49,10 @@ Participants read the ten questions on the website, open each Tracxn starting li
 - `index.html` carries a Content-Security-Policy: scripts and styles load only from this site (plus the Lato font from Google Fonts), images only from this site and cdn.tracxn.com, and the page may send data only to docs.google.com. If you add a new script, font or data source, update that policy or the browser will block it.
 - Only people with write access to the repository can change the site. Keep two-factor authentication on for the owning GitHub account and do not add collaborators you do not need.
 - The Google Form's address is visible in `config.js` by necessity. Anyone can therefore send junk responses to it. Watch for obvious spam rows in the response Sheet; real entries carry a university email.
+- The page refuses to load inside another site's frame, and every input has a length limit.
+- The deploy workflow runs only when `main` changes. It does not run on pull requests, so a pull request from a stranger cannot publish anything. Never merge a pull request you did not ask for.
+- Identity is not verified. The page cannot prove who submitted a response or stop someone submitting twice, because anyone can post to the form directly. When marking, count only the first response per university email, check the email belongs to the stated university, and treat a Tracxn link as correct only if it contains the expected company id.
+- The response Sheet holds text typed by participants. Do not paste cell contents into a formula bar or run macros on them, and open exported CSV files with care.
 - Never commit the answer key, participant data or credentials.
 
 ## Before the event
