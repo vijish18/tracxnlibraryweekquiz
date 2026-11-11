@@ -17,12 +17,12 @@ Confirm required fields and participant data notice with PES. Use one field per 
 
 ## Questions
 
-The form holds 3 participant fields (full name, university email, department and enrolled year) and 10 required paragraph questions, Q1 to Q10. The question text, Tracxn starting links and filter hints live in `app.js` (the `QUESTIONS` list); the form repeats each question and its hint so it can also be answered on its own.
+The form holds 4 participant fields (full name, university email, university name, department and enrolled year) and 10 required paragraph questions, Q1 to Q10. The question text, Tracxn starting links and filter hints live in `app.js` (the `QUESTIONS` list); the form repeats each question and its hint so it can also be answered on its own.
 
 - Q1 to Q6: the answer is the company's Tracxn link.
 - Q7 to Q10: the answer is a whole number.
 
-`config.js` maps each question to its Google Form entry id (`answerFields`). Editing a question's wording in Google Forms keeps its entry id. Deleting and re-adding a question changes the id, and `config.js` must then be updated.
+`config.js` maps each participant field (`detailFields`) and each question (`answerFields`) to its Google Form entry id. Every required question in the form must have an entry in `config.js`, or Google rejects the response without the page knowing. Editing a question's wording in Google Forms keeps its entry id. Deleting and re-adding a question changes the id, and `config.js` must then be updated.
 
 The answer key is kept outside this repository. Never commit it here: the repository and the website are public.
 
