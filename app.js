@@ -195,48 +195,98 @@ if (partOne && partTwo) {
 
 const form = parseGoogleFormUrl(window.QUIZ_CONFIG?.googleFormUrl);
 const fields = window.QUIZ_CONFIG?.answerFields || {};
-const continueButton = document.querySelector("#continue-button");
+const detailFields = window.QUIZ_CONFIG?.detailFields || {};
+const submitForm = document.querySelector("#submit");
+const submitButton = document.querySelector("#submit-button");
 const warning = document.querySelector("#submit-warning");
-const frameShell = document.querySelector("#form-frame");
-const formLink = document.querySelector("#form-link");
+const DETAILS = [
+  { key: "name", id: "detail-name", check: (v) => v.length >= 2 ? "" : "Enter your full name." },
+  { key: "email", id: "detail-email", check: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : "Enter a valid email address." },
+  { key: "department", id: "detail-department", check: (v) => v.length >= 2 ? "" : "Enter your department and enrolled year." }
+];
 
-// Builds the form link with the ten answers filled in. Participant details are typed in the form itself.
-function filledFormUrl(embedded) {
-  const url = new URL(form.href);
-  url.searchParams.set("usp", "pp_url");
-  QUESTIONS.forEach((question) => {
-    if (fields[question.n]) url.searchParams.set(fields[question.n], (answers[question.n] || "").trim());
-  });
-  if (embedded) url.searchParams.set("embedded", "true");
-  return url.href;
+function showDetailError(detail, message) {
+  const input = document.querySelector("#" + detail.id);
+  const error = document.querySelector("#" + detail.id + "-error");
+  error.hidden = !message;
+  error.textContent = message;
+  input.setAttribute("aria-invalid", message ? "true" : "false");
+}
+DETAILS.forEach((detail) => {
+  const input = document.querySelector("#" + detail.id);
+  if (input) input.addEventListener("input", () => { showDetailError(detail, ""); showWarning(""); });
+});
+
+function showWarning(message) {
+  warning.hidden = !message;
+  warning.textContent = message;
 }
 
-if (continueButton && form) {
-  continueButton.addEventListener("click", () => {
+// Sends the response straight to Google Forms. The reply cannot be read from another site,
+// so a completed request is treated as sent and a network failure as not sent.
+async function sendResponse(values) {
+  const action = form.href.replace(/\/viewform\/?$/, "/formResponse");
+  await fetch(action, { method: "POST", mode: "no-cors", body: new URLSearchParams(values) });
+}
+
+if (submitForm && form) {
+  submitForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (submitButton.disabled) return;
+
     const missing = QUESTIONS.filter((question) => problemWith(question, answers[question.n]));
     if (missing.length) {
-      warning.hidden = false;
-      warning.textContent = (missing.length === 1 ? "Question " : "Questions ") + missing.map((question) => question.n).join(", ") +
-        (missing.length === 1 ? " still needs" : " still need") + " a valid answer.";
-      frameShell.hidden = true;
-      formLink.hidden = true;
+      showWarning((missing.length === 1 ? "Question " : "Questions ") + missing.map((question) => question.n).join(", ") +
+        (missing.length === 1 ? " still needs" : " still need") + " a valid answer.");
       const first = document.querySelector("#answer-" + missing[0].n);
       first.dispatchEvent(new Event("blur"));
       first.scrollIntoView({ block: "center" });
       first.focus({ preventScroll: true });
       return;
     }
-    warning.hidden = true;
-    document.querySelector("#quiz-frame").src = filledFormUrl(true);
-    formLink.href = filledFormUrl(false);
-    formLink.hidden = false;
-    frameShell.hidden = false;
-    continueButton.firstChild.textContent = "Refresh the form with my answers ";
-    frameShell.scrollIntoView({ block: "start" });
+
+    const values = {};
+    let firstBad = null;
+    DETAILS.forEach((detail) => {
+      const input = document.querySelector("#" + detail.id);
+      const value = input.value.trim();
+      const problem = detail.check(value);
+      showDetailError(detail, problem);
+      if (problem && !firstBad) firstBad = input;
+      values[detailFields[detail.key]] = value;
+    });
+    if (firstBad) {
+      showWarning("Add your details before submitting.");
+      firstBad.focus();
+      return;
+    }
+    QUESTIONS.forEach((question) => { values[fields[question.n]] = answers[question.n].trim(); });
+
+    showWarning("");
+    submitButton.disabled = true;
+    submitButton.firstChild.textContent = "Sending… ";
+    try {
+      await sendResponse(values);
+    } catch {
+      submitButton.disabled = false;
+      submitButton.firstChild.textContent = "Submit my answers ";
+      showWarning("Your answers could not be sent. Check your internet connection and press Submit again. Your answers are still saved here.");
+      return;
+    }
+    const name = values[detailFields.name];
+    try { window.localStorage.removeItem(STORAGE_KEY); } catch { /* storage unavailable */ }
+    document.querySelector("#details").hidden = true;
+    document.querySelector(".submit-actions").hidden = true;
+    document.querySelector(".submit-head").hidden = true;
+    document.querySelector("#done-text").textContent = "Thank you, " + name + ". Your ten answers were submitted at " +
+      new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + ". You can close this page.";
+    document.querySelector("#submit-done").hidden = false;
+    document.querySelectorAll(".answer-input").forEach((input) => { input.readOnly = true; });
+    document.querySelector("#submit-done").scrollIntoView({ block: "center" });
   });
-} else if (continueButton) {
-  continueButton.disabled = true;
-  document.querySelector("#submit-status").textContent = "The quiz form is being set up. Please check back shortly.";
+} else if (submitButton) {
+  submitButton.disabled = true;
+  document.querySelector("#submit-status").textContent = "The quiz is being set up. Please check back shortly.";
 }
 
 const clearButton = document.querySelector("#clear-button");
@@ -255,8 +305,7 @@ if (clearButton) {
       input.value = "";
       input.dispatchEvent(new Event("input"));
     });
-    frameShell.hidden = true;
-    formLink.hidden = true;
+    showWarning("");
     armed = false;
     clearButton.textContent = "Clear my answers";
   });

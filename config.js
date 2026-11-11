@@ -1,8 +1,13 @@
 // Published participant form. Responses are stored by Google Forms in its linked private Sheet.
-// answerFields maps question numbers 1-10 to the Google Form's entry ids, so answers typed on
-// this page can be carried into the form. Participant details are never placed in the link.
+// answerFields and detailFields map this page's inputs to the Google Form's entry ids. On submit,
+// the page posts them straight to the form, so participants never see the Google Form itself.
 window.QUIZ_CONFIG = Object.freeze({
   googleFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLScyDRD9x8-DO3EZpuhTmcJ0GvFgaBj5EmoxzjETlyfRW5yhRg/viewform",
+  detailFields: Object.freeze({
+    name: "entry.292649329",
+    email: "entry.112996021",
+    department: "entry.1672463290"
+  }),
   answerFields: Object.freeze({
     1: "entry.1661502225",
     2: "entry.1037880773",

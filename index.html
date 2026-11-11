@@ -41,7 +41,7 @@
 <section class="quiz-section wrap" id="quiz">
   <div class="quiz-heading">
     <div><p class="eyebrow">LIBRARY WEEK</p><h2>Take the quiz</h2></div>
-    <p>Your answers are saved in this browser as you type.</p>
+    <p>Your answers are saved in this browser until you submit.</p>
   </div>
 
   <div class="progress" id="progress" aria-live="polite">
@@ -64,25 +64,29 @@
   </div>
   <ol class="questions" id="questions-part-2" start="7"></ol>
 
-  <div class="submit-panel" id="submit">
+  <form class="submit-panel" id="submit" novalidate>
     <div class="submit-head">
       <span class="part-tag">FINAL STEP</span>
       <h3>Submit your answers</h3>
-      <p id="submit-status">Answer the questions above, then continue. Your answers will be filled into the form for you. Add your name, university email and department there, and press Submit.</p>
+      <p id="submit-status">Add your details and submit. You can submit once all ten questions have a valid answer.</p>
+    </div>
+    <div class="details" id="details">
+      <div class="detail"><label for="detail-name">Full name</label><input id="detail-name" type="text" autocomplete="name" required><p class="answer-error" id="detail-name-error" hidden></p></div>
+      <div class="detail"><label for="detail-email">University email</label><input id="detail-email" type="email" autocomplete="email" inputmode="email" required><p class="answer-error" id="detail-email-error" hidden></p></div>
+      <div class="detail"><label for="detail-department">Department and enrolled year</label><input id="detail-department" type="text" placeholder="e.g. B-Tech-2021" required><p class="answer-error" id="detail-department-error" hidden></p></div>
     </div>
     <div class="submit-actions">
-      <button type="button" class="button primary" id="continue-button">Continue to submit <span aria-hidden="true">→</span></button>
-      <a class="platform-link" id="form-link" target="_blank" rel="noopener noreferrer" hidden>Open the form in a new tab <span aria-hidden="true">↗</span></a>
+      <button type="submit" class="button primary" id="submit-button">Submit my answers <span aria-hidden="true">→</span></button>
       <button type="button" class="text-button" id="clear-button">Clear my answers</button>
     </div>
     <p class="submit-warning" id="submit-warning" role="alert" hidden></p>
-    <div class="form-frame" id="form-frame" hidden>
-      <p class="form-frame-note">Check your answers below, fill in your details, and press <strong>Submit</strong> at the bottom of the form. Wait for the message confirming your response has been recorded.</p>
-      <iframe id="quiz-frame" title="Library Week Tracxn Platform Quiz: submit your answers" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <div class="submit-done" id="submit-done" role="status" hidden>
+      <span class="done-mark" aria-hidden="true">✓</span>
+      <div><h3>Your answers have been sent.</h3><p id="done-text"></p></div>
     </div>
-  </div>
+  </form>
 
-  <noscript><p>Enable JavaScript to see the questions, or <a href="https://docs.google.com/forms/d/e/1FAIpQLScyDRD9x8-DO3EZpuhTmcJ0GvFgaBj5EmoxzjETlyfRW5yhRg/viewform" target="_blank" rel="noopener noreferrer">open the Google Form directly</a>.</p></noscript>
+  <noscript><p>Enable JavaScript to take the quiz.</p></noscript>
 </section>
 </main>
 
