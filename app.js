@@ -312,11 +312,11 @@ if (clearButton) {
 }
 
 const researchTips = [
-  { title: "Sign in to Tracxn first.", text: "Open Tracxn in another tab and sign in with your institution account. Every “Start here” button will then open straight on the right list." },
-  { title: "Add the filters left to right.", text: "Each hint is a chain. Add the first filter, check that the list shrinks, then add the next. Skipping one changes the answer." },
-  { title: "Questions 1 to 6: copy the company link.", text: "Click the company’s name to open its Tracxn page, then copy the link from your browser’s address bar and paste it as your answer." },
-  { title: "Questions 7 to 10: read the result count.", text: "Once every filter is on, Tracxn shows the number of results above the table. That number is your answer." },
-  { title: "Get the dates exactly right.", text: "For funding rounds and acquisitions, set the range from 1 January to 31 October 2026. One wrong date gives a different count." }
+  { title: "Start by signing in to Tracxn.", text: "Open Tracxn in another tab and sign in with your institution account. Every “Start here” button will then take you straight to the right list." },
+  { title: "Build your filters step by step.", text: "Each hint is a chain. Add the first filter, watch the list narrow, then add the next. Every step brings you closer to the answer." },
+  { title: "Questions 1 to 6: share the company’s link.", text: "Click the company’s name to open its Tracxn page, then copy the link from your browser’s address bar and paste it as your answer." },
+  { title: "Questions 7 to 10: read the result count.", text: "With all the filters on, Tracxn shows the number of results above the table. That number is your answer." },
+  { title: "Double-check your dates.", text: "For funding rounds and acquisitions, use 1 January to 31 October 2026 so your count matches the question." }
 ];
 let researchTipIndex = 0;
 function showResearchTip(direction) {
