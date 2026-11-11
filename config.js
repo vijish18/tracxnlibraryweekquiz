@@ -6,6 +6,7 @@ window.QUIZ_CONFIG = Object.freeze({
   detailFields: Object.freeze({
     name: "entry.292649329",
     email: "entry.112996021",
+    university: "entry.1923903743",
     department: "entry.1672463290"
   }),
   answerFields: Object.freeze({

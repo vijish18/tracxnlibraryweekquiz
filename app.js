@@ -202,6 +202,7 @@ const warning = document.querySelector("#submit-warning");
 const DETAILS = [
   { key: "name", id: "detail-name", check: (v) => v.length >= 2 ? "" : "Enter your full name." },
   { key: "email", id: "detail-email", check: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : "Enter a valid email address." },
+  { key: "university", id: "detail-university", check: (v) => v.length >= 2 ? "" : "Enter your university’s name." },
   { key: "department", id: "detail-department", check: (v) => v.length >= 2 ? "" : "Enter your department and enrolled year." }
 ];
 
