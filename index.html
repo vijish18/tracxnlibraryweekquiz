@@ -74,10 +74,10 @@
       <p id="submit-status">Add your details and submit. You can submit once all ten questions have a valid answer.</p>
     </div>
     <div class="details" id="details">
-      <div class="detail"><label for="detail-name">Full name</label><input id="detail-name" type="text" autocomplete="name" required><p class="answer-error" id="detail-name-error" hidden></p></div>
-      <div class="detail"><label for="detail-email">University email</label><input id="detail-email" type="email" autocomplete="email" inputmode="email" required><p class="answer-error" id="detail-email-error" hidden></p></div>
-      <div class="detail"><label for="detail-university">University name</label><input id="detail-university" type="text" autocomplete="organization" required><p class="answer-error" id="detail-university-error" hidden></p></div>
-      <div class="detail"><label for="detail-department">Department and enrolled year</label><input id="detail-department" type="text" placeholder="e.g. B-Tech-2021" required><p class="answer-error" id="detail-department-error" hidden></p></div>
+      <div class="detail"><label for="detail-name">Full name</label><input id="detail-name" maxlength="120" type="text" autocomplete="name" required><p class="answer-error" id="detail-name-error" hidden></p></div>
+      <div class="detail"><label for="detail-email">University email</label><input id="detail-email" maxlength="160" type="email" autocomplete="email" inputmode="email" required><p class="answer-error" id="detail-email-error" hidden></p></div>
+      <div class="detail"><label for="detail-university">University name</label><input id="detail-university" maxlength="160" type="text" autocomplete="organization" required><p class="answer-error" id="detail-university-error" hidden></p></div>
+      <div class="detail"><label for="detail-department">Department and enrolled year</label><input id="detail-department" maxlength="80" type="text" placeholder="e.g. B-Tech-2021" required><p class="answer-error" id="detail-department-error" hidden></p></div>
     </div>
     <div class="submit-actions">
       <button type="submit" class="button primary" id="submit-button">Submit my answers <span aria-hidden="true">→</span></button>
