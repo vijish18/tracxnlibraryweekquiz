@@ -31,14 +31,17 @@ Run `python3 -m http.server 8000` from this directory and visit http://localhost
 
 Updating the repository redeploys the website. Editing form questions happens in Google Forms. Updating a form's existing questions normally does not require changing the embed URL; replacing the entire form requires updating config.js.
 
+## How answers reach Google Forms
+
+Participants read the ten questions on the website, open each Tracxn starting link, and type their answers into the page. Answers are kept in the browser's local storage so a refresh does not lose them. "Continue to submit" then loads the Google Form with those ten answers already filled in. The participant adds their name, email and department in the form and presses Google's own Submit button.
+
 ## Constraints
 
-- HTML/CSS styles the surrounding page. Google controls the embedded quiz fields, theme, validation and confirmation.
-- The outer page cannot read cross-origin answers or detect successful submission. It never treats iframe load as submission success. Participants must see Google Forms' confirmation.
-- The embedded form has a fixed, scrollable height. A direct-form fallback link remains visible. Test sign-in in the actual browsers participants will use.
-- Website event dates are descriptive. Opening and closing response collection must be managed in Google Forms; a JavaScript date check would not enforce it.
-- No promise of unlimited submissions or guaranteed throughput. Google Forms handles collection; test the actual event workflow and access settings.
-- The preview questions are browsing prompts, not a second answer-entry interface. All responses are entered in Google Forms.
+- Google Forms still receives and confirms every submission. The page never submits on a participant's behalf and never treats the form loading as a successful submission. Participants must see Google Forms' confirmation.
+- Only the ten quiz answers are carried in the form link. Participant details are typed into the form and are never placed in a link.
+- `config.js` must list the correct entry id for each question (see `GOOGLE_FORM_SETUP.md`). If an id is wrong, that answer arrives blank and the participant has to retype it in the form.
+- Website event dates are descriptive. Opening and closing response collection must be managed in Google Forms.
+- No answer key belongs in this repository or on the website.
 
 ## Before the event
 
